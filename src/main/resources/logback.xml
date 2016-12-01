@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration scan="true" scanPeriod="30 seconds">
+    <!--Конфигурируем два append, которые пишут log куда нибудь (в одно или несколько мест (в консоль, в файл,
+    отсылать на сервер, есть FrameWork - которые могут собирать логи со многих разбросанных по миру Instance.
+    то есть инструменты для обработки логов)).
+    Суть в в том что вы можете сконфигурировать несколько адаптеров, что бы каждый писал в свое место-->
+    <appender name="console" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder>
+            <pattern>%d{HH:mm:ss.SSS} %-5level [%thread] %logger{36} - %msg%n</pattern>
+        </encoder>
+    </appender>
+    <appender name="file" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>log/jdbc.log</file>
+        <prudent>true</prudent>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <!--            Мы можем разбивать, сконфигурировать сдесь мы разбиваем по дням.
+            На каждый день мы делаем новый файл (можно разбивать по объему, по строку)-->
+            <fileNamePattern>jdbc-%d{yyyy-MM-dd}.log</fileNamePattern>
+        </rollingPolicy>
+        <encoder>
+            <pattern>%d{HH:mm:ss.SSS} %-5level [%thread] %logger{36} - %msg%n</pattern>
+        </encoder>
+    </appender>
+    <!--Также мы устанавливаем root level для logger. Основыне уровни INFO (полезная информация),
+    WARNING(неожиданное, но некритическое), ERROR(Ошибка программы или потока, или 404 пользователю),DEBUG(с камментами)-->
+    <root level="INFO">
+        <appender-ref ref="console"/>
+        <appender-ref ref="file"/>
+    </root>
+</configuration>
