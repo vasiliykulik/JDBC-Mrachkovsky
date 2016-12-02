@@ -1,8 +1,10 @@
+package ua.goit.java.jdbc.model;
+
 import java.time.LocalDateTime;
 
 /**
  * 8.Сделаем более ООП
- * создадим класс Employee
+ * создадим класс ua.goit.java.jdbc.model.Employee
  */
 public class Employee {
     private int id;
@@ -17,7 +19,7 @@ public class Employee {
 
     @Override
     public String toString() {
-        final StringBuilder sb = new StringBuilder("Employee{");
+        final StringBuilder sb = new StringBuilder("ua.goit.java.jdbc.model.Employee{");
         sb.append("id=").append(id);
         sb.append(", name='").append(name).append('\'');
         sb.append(", age=").append(age);
