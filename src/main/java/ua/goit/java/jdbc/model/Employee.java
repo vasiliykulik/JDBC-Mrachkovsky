@@ -1,11 +1,5 @@
 package ua.goit.java.jdbc.model;
 
-import java.time.LocalDateTime;
-
-/**
- * 8.Сделаем более ООП
- * создадим класс ua.goit.java.jdbc.model.Employee
- */
 public class Employee {
     private int id;
     private String name;
@@ -13,9 +7,6 @@ public class Employee {
     private String address;
     private float salary;
     private String joinDate;
-
-    //9. Нагенерим геттеров и сеттеров, и tostring
-
 
     @Override
     public String toString() {

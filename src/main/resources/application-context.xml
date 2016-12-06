@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+    <bean class="com.mchange.v2.c3p0.ComboPooledDataSource" id="dataSource">
+        <!-- минимальный набор property для подключения к БД
+        в середине будет некоторый метод load(), classForName b таким образом подгрузит и зарегистрирует драйвер в DriverManager-->
+        <property name="driverClass" value="${jdbc.driver.class}"/>
+        <property name="jdbcUrl" value="${jdbc.url}"/><!--куда мы коннектимся-->
+        <property name="user" value="${jdbc.user}"/>
+        <property name="password" value="${jdbc.password}"/>
+        <!--pool - кеш, что бы не создавать заново
+        minPoolSize - минимальное кол - во живых Connectin к БД,
+      императивные настройки, если у вас несколько обращений к БД в час - хватит и одного, с гоолвой,
+      если у вас сотни в секунду - тогда параллелить операции многоядерная система - для одновременного исполнения -->
+        <property name="minPoolSize" value="${jdbc.min.connections}"/>
+        <!--8 ядер и 2000 потоков, нужно будет хендлить переключения-->
+        <property name="maxPoolSize" value="${jdbc.max.connections}"/>
+        <!--Сколько новых Connection будет создаваться, это число есть смысл увеличивать - в высоконагруженных системах, сразу 5 создавать например для 5 новых потоков-->
+        <property name="acquireIncrement" value="${jdbc.acquire.increment}"/>
+    </bean>
+    <bean class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+        <property name="location" value="classpath:jdbc.properties"/>
+    </bean>
+</beans>
