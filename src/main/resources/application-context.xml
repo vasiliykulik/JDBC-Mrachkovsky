@@ -2,6 +2,12 @@
 <beans xmlns="http://www.springframework.org/schema/beans"
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
        xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+    <!--Теперь наше Dao - нужно объявить его как bean, что бы была возможность заинжектить  наш DataSource.
+    Вот заижектили наш DataSource в наш EmployeeDao, в JdbcEmployeeDao  добавив setter Datasource-->
+    <bean id="employeeDao" class="ua.goit.java.jdbc.model.jdbc.JdbcEmployeeDao">
+        <property name="dataSource" ref="dataSource"/>
+    </bean>
+
     <bean class="com.mchange.v2.c3p0.ComboPooledDataSource" id="dataSource">
         <!-- минимальный набор property для подключения к БД
         в середине будет некоторый метод load(), classForName b таким образом подгрузит и зарегистрирует драйвер в DriverManager-->
@@ -19,6 +25,11 @@
         <!--Сколько новых Connection будет создаваться, это число есть смысл увеличивать - в высоконагруженных системах, сразу 5 создавать например для 5 новых потоков-->
         <property name="acquireIncrement" value="${jdbc.acquire.increment}"/>
     </bean>
+
+    <bean id="txManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+        <property name="dataSource" ref = "dataSource"/>
+    </bean>
+
     <bean class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
         <property name="location" value="classpath:jdbc.properties"/>
     </bean>
