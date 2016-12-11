@@ -1,6 +1,7 @@
 package ua.goit.java.jdbc.controllers;
 
 import org.springframework.transaction.PlatformTransactionManager;
+import org.springframework.transaction.TransactionDefinition;
 import org.springframework.transaction.TransactionStatus;
 import org.springframework.transaction.support.DefaultTransactionDefinition;
 import ua.goit.java.jdbc.model.Employee;
@@ -16,7 +17,7 @@ public class EmployeeController {
     // 1. будет поддержка транзакций
     public List<Employee> getAllEmployees(){
 
-        TransactionStatus status = txManager.getTransaction(new DefaultTransactionDefinition())
+        TransactionStatus status = txManager.getTransaction(new DefaultTransactionDefinition(TransactionDefinition.PROPAGATION_REQUIRED));
 
     }
 }
