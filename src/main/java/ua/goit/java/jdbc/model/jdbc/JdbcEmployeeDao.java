@@ -2,6 +2,8 @@ package ua.goit.java.jdbc.model.jdbc;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 import ua.goit.java.jdbc.model.Employee;
 import ua.goit.java.jdbc.model.EmployeeDao;
 
@@ -29,6 +31,9 @@ public class JdbcEmployeeDao implements EmployeeDao {
 
 
     @Override
+    // 60. Dao - это объекты непосредственно работают с БД - и когда вы обращаетесь с ServiceLayer транзакция
+    // уже должна быть подключена (не всегда это нужно, и сейчас EmployeeController - выглядет лишней сущностью)
+    @Transactional(propagation = Propagation.REQUIRES_NEW)
     public Employee load(int id) {
        /* Не нужно каждому классу, каждому Dao знать о Имени пользователя о password, кто будет коннектится к БД*/
         try (Connection connection = dataSource.getConnection();

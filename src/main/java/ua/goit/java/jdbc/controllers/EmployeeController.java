@@ -18,6 +18,9 @@ public class EmployeeController {
     public List<Employee> getAllEmployees(){
 
         TransactionStatus status = txManager.getTransaction(new DefaultTransactionDefinition(TransactionDefinition.PROPAGATION_REQUIRED));
+        try {
+            List<Employee> result = employeeDao.
+        }
 
     }
 }
