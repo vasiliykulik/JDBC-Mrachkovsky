@@ -6,5 +6,5 @@ public interface EmployeeDao {
 
     Employee load(int id);
 
-    List<Employee> getAll();
+    List<Employee> findAll();
 }
