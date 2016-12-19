@@ -33,7 +33,7 @@ public class JdbcEmployeeDao implements EmployeeDao {
     @Override
     // 60. Dao - это объекты непосредственно работают с БД - и когда вы обращаетесь с ServiceLayer транзакция
     // уже должна быть подключена (не всегда это нужно, и сейчас EmployeeController - выглядет лишней сущностью)
-    @Transactional(propagation = Propagation.REQUIRES_NEW)
+    @Transactional(propagation = Propagation.MANDATORY) // 62. Укажем Mandatory
     public Employee load(int id) {
        /* Не нужно каждому классу, каждому Dao знать о Имени пользователя о password, кто будет коннектится к БД*/
         try (Connection connection = dataSource.getConnection();
@@ -54,6 +54,7 @@ public class JdbcEmployeeDao implements EmployeeDao {
     }
 
     @Override
+    @Transactional(propagation = Propagation.MANDATORY) // 62. Укажем Mandatory
     public List<Employee> findAll() {
         List<Employee> result = new ArrayList<>();
         try (Connection connection = dataSource.getConnection();

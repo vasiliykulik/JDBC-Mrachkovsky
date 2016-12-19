@@ -26,7 +26,12 @@ public class Main {
     }
 
     private void start() {
-        employeeController.getAllEmployees().forEach(System.out::println);
+        /*// 61. Сервисы должны дергать Controller
+        employeeController.getAllEmployees().forEach(System.out::println);*/
+        //62. Вызовем getAllEmployeeById, посмотрим как PropagationLevel влияет (в методах Dao укажем
+        // каждый раз будет новая транзакция MANDATORY)
+
+        System.out.println(employeeController.getAllEmployeeById(2));
     }
 
     public void setEmployeeController(EmployeeController employeeController) {

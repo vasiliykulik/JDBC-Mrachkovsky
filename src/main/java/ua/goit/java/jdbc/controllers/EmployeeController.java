@@ -32,6 +32,8 @@ public class EmployeeController {
         }
     }
 // Вынос кода транзакции в Аспекты
+    // 63. Для того чтобы исправить - разкоментим
+    // 62. Изменим getAllEmployeeById (EmployeeController) - сделаем не Transactional
     @Transactional(propagation = Propagation.REQUIRED)
     public Employee getAllEmployeeById(int id) {
         return employeeDao.load(id);
