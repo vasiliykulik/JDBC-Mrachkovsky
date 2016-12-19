@@ -49,7 +49,7 @@ public class JdbcEmployeeDao implements EmployeeDao {
     }
 
     @Override
-    public List<Employee> getAll() {
+    public List<Employee> findAll() {
         List<Employee> result = new ArrayList<>();
         try (Connection connection = dataSource.getConnection();
              Statement statement = connection.createStatement()) {
