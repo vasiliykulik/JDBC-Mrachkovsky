@@ -20,7 +20,7 @@ public class EmployeeController {
     private EmployeeDao employeeDao;
 
     // 1. будет поддержка транзакций
-    public List<Employee> getAllEmployees() {
+/*    public List<Employee> getAllEmployees() {
         TransactionStatus status = txManager.getTransaction(new DefaultTransactionDefinition(TransactionDefinition.PROPAGATION_REQUIRED));
         try {
             List<Employee> result = employeeDao.findAll();
@@ -30,13 +30,28 @@ public class EmployeeController {
             txManager.rollback(status);
             throw new RuntimeException(e);// и передадим e в конструктор
         }
-    }
+    }*/
 // Вынос кода транзакции в Аспекты
     // 63. Для того чтобы исправить - разкоментим
     // 62. Изменим getAllEmployeeById (EmployeeController) - сделаем не Transactional
-    @Transactional(propagation = Propagation.REQUIRED)
-    public Employee getAllEmployeeById(int id) {
-        return employeeDao.load(id);
+
+    // 70. какими проблемами столкнемся, какое поведение программы в контексте открытия транзакции
+    // Вызов Транзакционного метода из нетранзакционного в рамках одного класса
+    // 71. (Этот метод не Transactional)
+    @Transactional
+    public List<Employee> getAllEmployees() {
+        return employeeDao.findAll(); //74. то при вызове этого метода транзакция еще не была открыта
+
+    }
+    // 71. для наглядности вот таким странным образм перебираем всех (Этот метод не Transactional)
+    public Employee getAllEmployeeById(int id){
+        List<Employee> employees = getAllEmployees();
+        for (Employee employee:employees){
+            if(employee.getId() == id){
+                return employee;
+            }
+        }
+        return null;
     }
 
 /*    // Вынос кода транзакции в Аспекты
